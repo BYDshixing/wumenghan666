@@ -4,25 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>红色研学成果展示｜中国航海博物馆与全国红色足迹纪实</title>
-
-  <!-- Google Fonts -->
+  <title>红色文化数字展厅</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --font: 'Inter', sans-serif;
-      --bg-base: #f5f5f5;
-      /* 主背景：浅灰 */
-      --card-bg: rgba(255, 255, 255, .4);
-      /* 卡片玻璃底色 */
-      --glass-blur: 12px;
-      --primary-red: #c31a1e;
-      /* 中国红 */
-      --accent-gold: #d4af37;
+      --bg: #FAF8F0;
+      /* 象牙白背景 */
+      --text-dark: #2B2B2B;
+      /* 深黑灰文字 */
+      --accent-red: #C31A1E;
+      /* 红色强调 */
+      --accent-gold: #D4AF37;
       /* 金色点缀 */
-      --shadow: 0 8px 24px rgba(0, 0, 0, .15);
-      --transition: 0.3s ease;
+      --glass-bg: rgba(255, 255, 255, .45);
+      --glass-blur: 12px;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .12);
+      --neumo-shadow: 4px 4px 12px rgba(0, 0, 0, .08), -4px -4px 12px rgba(255, 255, 255, .7);
+      --transition: .3s ease-in-out;
     }
 
     * {
@@ -31,13 +30,15 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: var(--font);
-      background: url('./bg.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background: var(--bg);
+      color: var(--text-dark);
       line-height: 1.6;
-      color: #333;
-      scroll-behavior: smooth;
     }
 
     a {
@@ -45,29 +46,40 @@
       text-decoration: none;
     }
 
-    /* ---------- 导航栏 ---------- */
+    .section {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeIn 0.6s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .section[data-delay] {
+      animation-delay: calc(var(--delay)*0.15s);
+    }
+
     .navbar {
       position: sticky;
       top: 0;
-      width: 100%;
+      z-index: 1000;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
-      background: rgba(255, 255, 255, .2);
+      background: var(--glass-bg);
       backdrop-filter: blur(var(--glass-blur));
-      z-index: 1000;
-      transition: var(--transition);
-    }
-
-    .navbar.scrolled {
-      background: rgba(255, 255, 255, .5);
+      border-bottom: 1px solid rgba(255, 255, 255, .3);
     }
 
     .logo {
       font-weight: 700;
       font-size: 1.2rem;
-      color: var(--primary-red);
+      color: var(--accent-red);
     }
 
     .nav-links {
@@ -78,14 +90,14 @@
     .nav-links a {
       position: relative;
       font-weight: 600;
-      color: #222;
+      transition: var(--transition);
     }
 
     .nav-links a::after {
       content: "";
       position: absolute;
       left: 0;
-      bottom: -2px;
+      bottom: -3px;
       width: 0;
       height: 2px;
       background: var(--accent-gold);
@@ -96,223 +108,133 @@
       width: 100%;
     }
 
-    /* ---------- Hero ---------- */
-    .hero {
-      position: relative;
-      min-height: 80vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    .nav-links a:hover {
+      transform: scale(1.03);
+      box-shadow: var(--shadow);
+    }
+
+    header {
       text-align: center;
+      padding: 4rem 1rem 2rem;
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--accent-red);
+      letter-spacing: .05em;
+    }
+
+    header h2 {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--text-dark);
+      margin-top: .6rem;
+    }
+
+    .vlog {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .vlog video {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: block;
+      border-radius: 12px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .vlog video:hover {
+      transform: scale(1.03) rotate(1deg);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .2);
+    }
+
+    .vlog p {
+      margin-top: 1rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: .8rem 1.6rem;
+      background: var(--accent-red);
       color: #fff;
-      background: linear-gradient(135deg, #a71d2a, #d43d46);
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: url('https://via.placeholder.com/1500x800?text=Hero+Background');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.2;
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      letter-spacing: .2em;
-      text-shadow: 0 0 10px rgba(0, 0, 0, .5);
-      margin-bottom: .5rem;
-    }
-
-    .hero h2 {
-      font-size: clamp(1.2rem, 3vw, 2rem);
-      font-weight: 400;
-      margin-bottom: 2rem;
-    }
-
-    .hero .btn {
-      padding: .8rem 1.5rem;
-      background: var(--accent-gold);
-      color: #000;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
-      box-shadow: var(--shadow);
+      box-shadow: var(--neumo-shadow);
       transition: var(--transition);
     }
 
-    .hero .btn:hover {
-      background: #e5b84c;
+    .btn:hover {
+      transform: scale(1.03) rotate(-1deg);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .2);
     }
 
-    /* ---------- 通用布局 ---------- */
-    section {
-      padding: 4rem 2rem;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .section-title::after {
-      content: "";
-      width: 60px;
-      height: 3px;
-      background: var(--accent-gold);
-      position: absolute;
-      left: 50%;
-      bottom: -10px;
-      transform: translateX(-50%);
-    }
-
-    /* ---------- 航海博物馆 ---------- */
-    .museum {
+    .carousel {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    .museum .big-img {
-      flex: 1 1 55%;
-    }
-
-    .museum .big-img img {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-    }
-
-    .museum .gallery {
-      flex: 1 1 40%;
-      display: grid;
-      grid-template-rows: repeat(3, 1fr);
-      gap: .8rem;
-    }
-
-    .museum .gallery img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 8px;
-      transition: var(--transition);
-    }
-
-    .museum .gallery img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
-    }
-
-    /* ---------- 红色足迹 ---------- */
-    .footprints {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    }
-
-    .footprints .item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-    }
-
-    .footprints .item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: var(--transition);
-    }
-
-    .footprints .item:hover img {
-      transform: scale(1.08);
-    }
-
-    .footprints .item::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(255, 255, 255, .1);
-      backdrop-filter: blur(2px);
-      opacity: 0;
-      transition: var(--transition);
-    }
-
-    .footprints .item:hover::after {
-      opacity: 1;
-    }
-
-    /* ---------- 学风与理论建设 ---------- */
-    .cards {
-      display: grid;
-      gap: 1.5rem;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-
-    .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(var(--glass-blur));
-      border-radius: 12px;
-      padding: 1.2rem;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-    }
-
-    .card h3 {
-      margin-bottom: .6rem;
-      color: var(--primary-red);
-    }
-
-    .card p {
-      font-size: .9rem;
-      margin-bottom: .8rem;
-    }
-
-    .card .icon {
-      width: 40px;
-      height: 40px;
-      background: var(--accent-gold);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #000;
-    }
-
-    /* ---------- 劳动实践（横向轮播） ---------- */
-    .labor {
       overflow-x: auto;
-      display: flex;
       gap: 1rem;
-      padding-bottom: 1rem;
+      padding: 0 1rem;
       scroll-snap-type: x mandatory;
     }
 
-    .labor img {
-      flex: 0 0 80%;
-      max-width: 400px;
-      height: auto;
+    .carousel img {
+      flex: 0 0 260px;
+      max-width: 100%;
       border-radius: 12px;
-      scroll-snap-align: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
       box-shadow: var(--shadow);
+      scroll-snap-align: center;
+      transition: var(--transition);
     }
 
-    /* ---------- Footer ---------- */
+    .carousel img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .2);
+    }
+
+    .intro {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .glass-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .2);
+    }
+
+    .glass-card h3 {
+      font-size: 1.8rem;
+      color: var(--accent-red);
+      margin-bottom: 1rem;
+    }
+
+    .glass-card p {
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
     footer {
-      background: #7a0c1c;
+      background: #7A0C1C;
       color: #fff;
       text-align: center;
       padding: 2rem 1rem;
@@ -326,195 +248,203 @@
     }
 
     footer p {
-      margin: 0.4rem 0;
+      margin: .4rem 0;
     }
 
     footer .small {
-      font-size: .8rem;
-      opacity: .8;
+      font-size: .85rem;
+      opacity: .85;
     }
 
-    /* ---------- 响应式调节 ---------- */
-    @media (max-width:768px) {
+    .decor {
+      position: fixed;
+      top: 0;
+      right: 0;
+      pointer-events: none;
+      width: 250px;
+      height: 100vh;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%23c31a1e" d="M0,100 C50,0 150,0 200,100 L200,200 L0,200 Z"/></svg>') no-repeat center/contain;
+      animation: float 6s ease-in-out infinite;
+      opacity: .15;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .vlog-item {
+      flex: 0 0 300px;
+      scroll-snap-align: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .vlog-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .2);
+    }
+
+    .vlog-item video {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      background: #000;
+      outline: none;
+      border: none;
+    }
+
+    .vlog-item p {
+      margin-top: 0.8rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.4;
+      font-size: 0.95rem;
+    }
+
+    @media(max-width:768px) {
       .navbar {
         flex-direction: column;
         gap: .8rem;
       }
 
-      .museum {
-        flex-direction: column;
+      .carousel img,
+      .vlog-item {
+        flex: 0 0 85%;
       }
 
-      .museum .big-img,
-      .museum .gallery {
-        flex-basis: 100%;
-      }
-
-      .labor img {
-        flex-basis: 90%;
+      header {
+        padding: 3rem 0.5rem;
       }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- Navbar -->
-  <header class="navbar" id="navbar">
-    <div class="logo">第二小组｜红色研学展览</div>
+  <div class="decor"></div>
+  <header class="navbar">
+    <div class="logo">第二小组 · 红色研学展览</div>
     <nav class="nav-links">
-      <a href="#museum">航海博物馆</a>
-      <a href="#footprints">红色足迹</a>
-      <a href="#study">学风建设</a>
-      <a href="#labor">劳动实践</a>
+      <a href="#vlog">Vlog</a>
+      <a href="#wu_si">五四研学</a>
+      <a href="#group_discussion">小组讨论</a>
+      <a href="#labor_education">同劳教育</a>
+      <a href="#summary">研学体会</a>
     </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="hero" id="hero">
-    <h1>寻访红色根脉 · 传承时代使命</h1>
-    <h2>中国航海博物馆与全国红色研学实践纪实</h2>
-    <button class="btn" onclick="document.getElementById('museum').scrollIntoView({behavior:'smooth'});">
-      进入研学展区
-    </button>
+  <section class="section" data-delay="0">
+    <header>
+      <h1>寻访红色根脉，凝聚学风力量</h1>
+      <h2>上海电机学院·第二小组 吴梦涵（组长） 王宇（督导）</h2>
+    </header>
   </section>
 
-  <!-- 航海博物馆 -->
-  <section id="museum" class="museum">
-    <div class="section-title">中国航海博物馆｜沉浸式研学现场</div>
-    <div class="big-img">
-      <img src="https://via.placeholder.com/800x600?text=航海博物馆+主图" alt="航海博物馆主图">
-    </div>
-    <div class="gallery">
-      <img src="https://via.placeholder.com/400x300?text=外观" alt="航海博物馆外观">
-      <img src="https://via.placeholder.com/400x300?text=展厅内部" alt="展厅内部">
-      <img src="https://via.placeholder.com/400x300?text=船舶模型" alt="船舶模型">
-    </div>
-  </section>
-
-  <!-- 红色足迹 -->
-  <section id="footprints" class="footprints">
-    <div class="section-title">红色足迹｜城市记忆与历史现场</div>
-    <div class="item"><img src="https://via.placeholder.com/400x300?text=中共一大会址" alt="中共一大会址"></div>
-    <div class="item"><img src="https://via.placeholder.com/400x300?text=四行仓库" alt="四行仓库"></div>
-    <div class="item"><img src="https://via.placeholder.com/400x300?text=上海教育基地" alt="上海其他红色教育基地"></div>
-  </section>
-
-  <!-- 学风建设 -->
-  <section id="study" class="study">
-    <div class="section-title">学风建设｜理论学习与实践结合</div>
-    <div class="cards">
-      <div class="card">
-        <div class="icon">①</div>
-        <h3>二十届理论学习</h3>
-        <p>系统研读党的二十大精神，落实理论学习任务。</p>
-      </div>
-      <div class="card">
-        <div class="icon">②</div>
-        <h3>志愿服务与督导</h3>
-        <p>开展志愿服务活动，指导学生实践规范。</p>
-      </div>
-      <div class="card">
-        <div class="icon">③</div>
-        <h3>人民城市理念</h3>
-        <p>结合“人民城市”理念，推动校园文化建设。</p>
-      </div>
+  <section id="vlog" class="section" data-delay="1" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+    <h3 class="section-title" style="font-size: 1.8rem; color: var(--accent-red); margin-bottom: 1.5rem; text-align: center;">研学 Vlog</h3>
+    <div class="carousel">
+      <div class="vlog-item"><video controls><source src="1.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="2.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="3.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="4.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="5.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="6.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="7.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="8.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="9.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="10.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="11.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="12.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="13.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="14.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="15.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="16.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="17.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="18.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="19.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="20.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
     </div>
   </section>
 
-  <!-- 劳动实践 -->
-  <section id="labor" class="labor-section">
-    <div class="section-title">同劳教育｜田间实践与社会劳动</div>
-    <div class="labor">
-      <video controls>
-        <source src="1.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src=".mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="3.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="4.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="5.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="6.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="7.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="8.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="9.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="10.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="11.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="12.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="13.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="14.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="15.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="16.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="17.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="18.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="19.mp4" type="video/mp4">
-      </video>
-      <video controls>
-        <source src="20.mp4" type="video/mp4">
-      </video>
+  <section id="wu_si" class="section carousel-section" data-delay="2">
+    <h3 class="section-title">五四研学</h3>
+    <div class="carousel">
+      <img src="./content.jpg" alt="五四研学照片1">
+      <img src="./content.jpg" alt="五四研学照片2">
+      <img src="./content.jpg" alt="五四研学照片3">
+      <img src="./content.jpg" alt="五四研学照片4">
+      <img src="./content.jpg" alt="五四研学照片5">
+      <img src="./content.jpg" alt="五四研学照片6">
+      <img src="./content.jpg" alt="五四研学照片7">
+      <img src="./content.jpg" alt="五四研学照片8">
+      <img src="./content.jpg" alt="五四研学照片9">
+      <img src="./content.jpg" alt="五四研学照片10">
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer>
+  <section id="group_discussion" class="section carousel-section" data-delay="3">
+    <h3 class="section-title">小组讨论</h3>
+    <div class="carousel">
+      <img src="./content.jpg" alt="小组讨论照片1">
+      <img src="./content.jpg" alt="小组讨论照片2">
+      <img src="./content.jpg" alt="小组讨论照片3">
+      <img src="./content.jpg" alt="小组讨论照片4">
+      <img src="./content.jpg" alt="小组讨论照片5">
+      <img src="./content.jpg" alt="小组讨论照片6">
+      <img src="./content.jpg" alt="小组讨论照片7">
+      <img src="./content.jpg" alt="小组讨论照片8">
+      <img src="./content.jpg" alt="小组讨论照片9">
+      <img src="./content.jpg" alt="小组讨论照片10">
+    </div>
+  </section>
+
+  <section id="labor_education" class="section carousel-section" data-delay="4">
+    <h3 class="section-title">同劳教育</h3>
+    <div class="carousel">
+      <img src="./content.jpg" alt="同劳教育照片1">
+      <img src="./content.jpg" alt="同劳教育照片2">
+      <img src="./content.jpg" alt="同劳教育照片3">
+      <img src="./content.jpg" alt="同劳教育照片4">
+      <img src="./content.jpg" alt="同劳教育照片5">
+      <img src="./content.jpg" alt="同劳教育照片6">
+      <img src="./content.jpg" alt="同劳教育照片7">
+      <img src="./content.jpg" alt="同劳教育照片8">
+      <img src="./content.jpg" alt="同劳教育照片9">
+      <img src="./content.jpg" alt="同劳教育照片10">
+    </div>
+  </section>
+
+  <section id="summary" class="section intro" data-delay="5">
+    <div class="glass-card">
+      <h3>研学体会与感悟</h3>
+      <p>本次红色研学活动以中华优秀传统文化和革命历史为主线，结合航海博物馆的实地考察、五四青年节纪念活动以及同劳实践，帮助同学们深化对红色精神的理解，提升实践能力和团队协作意识。</p>
+      <p>在研学过程中，大家共同观看纪录片、进行现场互动、开展志愿服务，形成了“知史爱党、知行合一”的学习闭环。通过视频、图片和文字的多维呈现，期待更多人感受到研学的价值与魅力。</p>
+    </div>
+  </section>
+
+  <footer class="section" data-delay="6">
     <div class="sep"></div>
+    <p>组长：吴梦涵</p>
     <p>督导：王宇</p>
-    <p>组长：吴梦涵 陈思涵</p>
-    <p>制作人：罗梓杰 吴梦涵</p>
-    <p>小组成员：罗梓杰、刘潘慧、雷明祥、黎琪</p>
-    <p class="small">© 2026 上海电机学院｜红色研学成果展</p>
+    <p>小组成员：罗梓杰&nbsp;&nbsp;（占位）</p>
+    <p class="small">© 202X 上海电机学院·红色研学成果展示</p>
   </footer>
 
   <script>
-    // Navbar 滚动后半透明效果
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) navbar.classList.add('scrolled');
-      else navbar.classList.remove('scrolled');
-    });
-
-    // 锚点平滑滚动（兼容旧浏览器）
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+    // 为 .section 添加递增的 data-delay（用于 staggered fade‑in）
+    document.querySelectorAll('.section').forEach((s, i) => s.dataset.delay = i);
   </script>
 </body>
 
