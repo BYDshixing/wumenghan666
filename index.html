@@ -9,13 +9,18 @@
   <style>
     :root {
       --font: 'Inter', sans-serif;
-      --text-dark: #ffffff;
-      --text-muted: #e0e0e0;
-      --accent-red: #ff3b3f;
-      --accent-gold: #FBEA97;
-      --glass-bg: rgba(40, 0, 5, 0.5);
-      --glass-blur: 16px;
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --bg: #FAF8F0;
+      /* 象牙白背景 */
+      --text-dark: #2B2B2B;
+      /* 深黑灰文字 */
+      --accent-red: #C31A1E;
+      /* 红色强调 */
+      --accent-gold: #D4AF37;
+      /* 金色点缀 */
+      --glass-bg: rgba(255, 255, 255, .45);
+      --glass-blur: 12px;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .12);
+      --neumo-shadow: 4px 4px 12px rgba(0, 0, 0, .08), -4px -4px 12px rgba(255, 255, 255, .7);
       --transition: .3s ease-in-out;
     }
 
@@ -31,18 +36,9 @@
 
     body {
       font-family: var(--font);
-      background: url('bg1.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background: var(--bg);
       color: var(--text-dark);
       line-height: 1.6;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(100, 10, 15, 0.75);
-      z-index: -2;
     }
 
     a {
@@ -117,31 +113,21 @@
       box-shadow: var(--shadow);
     }
 
-    .hero-banner {
-      position: relative;
+    header {
       text-align: center;
-      padding: 6rem 1rem 4rem;
-      border-radius: 16px;
-      margin: 2rem auto;
-      max-width: 1000px;
-      background: linear-gradient(to bottom, rgba(50,0,0,0.4), rgba(100,10,15,0.9)), url('bg2.jpg') center/cover;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,0.1);
-      overflow: hidden;
+      padding: 4rem 1rem 2rem;
     }
 
-    .hero-banner h1 {
+    header h1 {
       font-size: clamp(2rem, 5vw, 3rem);
-      color: var(--accent-gold);
+      color: var(--accent-red);
       letter-spacing: .05em;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
-    .hero-banner h2 {
+    header h2 {
       font-size: clamp(1rem, 2.5vw, 1.4rem);
-      color: #fff;
-      margin-top: .8rem;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      color: var(--text-dark);
+      margin-top: .6rem;
     }
 
     .vlog {
@@ -170,7 +156,7 @@
       margin-top: 1rem;
       font-size: 1rem;
       line-height: 1.6;
-      color: var(--text-muted);
+      color: #444;
     }
 
     .btn {
@@ -183,7 +169,7 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
-      box-shadow: 0 4px 15px rgba(255, 59, 63, 0.4);
+      box-shadow: var(--neumo-shadow);
       transition: var(--transition);
     }
 
@@ -270,31 +256,28 @@
       opacity: .85;
     }
 
-    .decor-1, .decor-2 {
+    .decor {
       position: fixed;
+      top: 0;
+      right: 0;
       pointer-events: none;
-      mix-blend-mode: multiply;
-      z-index: -1;
-      opacity: 0.6;
-    }
-    .decor-1 {
-      bottom: -5vh;
-      right: -5vw;
-      width: 50vw;
-      max-width: 600px;
-      animation: float 8s ease-in-out infinite;
-    }
-    .decor-2 {
-      top: 10vh;
-      left: -2vw;
-      width: 25vw;
-      max-width: 300px;
-      animation: float 6s ease-in-out infinite reverse;
+      width: 250px;
+      height: 100vh;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%23c31a1e" d="M0,100 C50,0 150,0 200,100 L200,200 L0,200 Z"/></svg>') no-repeat center/contain;
+      animation: float 6s ease-in-out infinite;
+      opacity: .15;
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
     }
 
     .vlog-item {
@@ -350,8 +333,7 @@
 </head>
 
 <body>
-  <img src="bg3.jpg" class="decor-1" alt="剪影装饰">
-  <img src="bg4.jpg" class="decor-2" alt="党徽装饰">
+  <div class="decor"></div>
   <header class="navbar">
     <div class="logo">第二小组 · 红色研学展览</div>
     <nav class="nav-links">
@@ -364,116 +346,35 @@
   </header>
 
   <section class="section" data-delay="0">
-    <header class="hero-banner">
+    <header>
       <h1>寻访红色根脉，凝聚学风力量</h1>
       <h2>上海电机学院·第二小组 王宇（督导） 吴梦涵（组长）</h2>
     </header>
   </section>
 
   <section id="vlog" class="section" data-delay="1" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
-    <h3 class="section-title"
-      style="font-size: 1.8rem; color: var(--accent-red); margin-bottom: 1.5rem; text-align: center;">研学心得体会</h3>
+    <h3 class="section-title" style="font-size: 1.8rem; color: var(--accent-red); margin-bottom: 1.5rem; text-align: center;">研学心得体会</h3>
     <div class="carousel">
-      <div class="vlog-item"><video controls>
-          <source src="1.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="2.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="3.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="4.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="5.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="6.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="7.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="8.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="9.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="10.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="11.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="12.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="13.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="14.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="15.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="16.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="17.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="18.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="19.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
-      <div class="vlog-item"><video controls>
-          <source src="20.mp4" type="video/mp4">
-        </video>
-        <p>罗梓杰<br>机制卓越2411</p>
-      </div>
+      <div class="vlog-item"><video controls><source src="1.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="2.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="3.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="4.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="5.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="6.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="7.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="8.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="9.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="10.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="11.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="12.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="13.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="14.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="15.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="16.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="17.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="18.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="19.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
+      <div class="vlog-item"><video controls><source src="20.mp4" type="video/mp4"></video><p>罗梓杰<br>机制卓越2411</p></div>
     </div>
   </section>
 
