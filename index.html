@@ -265,8 +265,15 @@
     }
 
     @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
     }
 
     .vlog-item {
@@ -308,9 +315,12 @@
         flex-direction: column;
         gap: .8rem;
       }
-      .carousel img, .vlog-item {
+
+      .carousel img,
+      .vlog-item {
         flex: 0 0 85%;
       }
+
       header {
         padding: 3rem 0.5rem;
       }
@@ -339,7 +349,8 @@
   </section>
 
   <section id="vlog" class="section" data-delay="1" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
-    <h3 class="section-title" style="font-size: 1.8rem; color: var(--accent-red); margin-bottom: 1.5rem; text-align: center;">研学心得体会</h3>
+    <h3 class="section-title"
+      style="font-size: 1.8rem; color: var(--accent-red); margin-bottom: 1.5rem; text-align: center;">研学心得体会</h3>
     <div class="carousel">
       <!-- 1 机制2412 吴梦涵 -->
       <div class="vlog-item">
@@ -545,7 +556,7 @@
     <p>督导：王宇</p>
     <p>组长：吴梦涵</p>
     <p>制作人：罗梓杰 吴梦涵</p>
-    <p class="small">© 2026 上海电机学院·红色研学成果展示</p>
+    <p class="small">© 2026 上海电机学院红色研学成果展示</p>
   </footer>
 
   <script>
